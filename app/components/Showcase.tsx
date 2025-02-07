@@ -9,40 +9,40 @@ const CarSlider = () => {
 
   const cars = [
     {
-      name: "Rolls Royce Ghost 3",
+      name: "VIP",
       price: "120",
-      description: "Luxury and elegance combined.",
+      description: " Place Your Bets & Cash Out Big.",
       image: "/slide2.jpg",
     },
     {
-      name: "Ferrari 365 Daytona",
+      name: "VIP",
       price: "180",
-      description: "Speed and style in one package.",
+      description: "High-Stakes Predictions, Huge Rewards!.",
       image: "/slide3.jpg",
     },
     {
-      name: "Range Rover Evoque",
+      name: "VIP",
       price: "180",
-      description: "A blend of comfort and power.",
-      image: "/slide4.jpg",
+      description: " Bet on Your Favorite Players.",
+      image: "/g3.jpg",
     },
     {
-      name: "Bentley Continental",
+      name: "VIP",
       price: "160",
-      description: "Classic British luxury redefined.",
-      image: "/slide5.jpg",
+      description: " Win Up to $1,000 Instantly!.",
+      image: "/g2.jpg",
     },
     {
-      name: "Porsche 911 GT3",
+      name: "VIP",
       price: "200",
-      description: "A true track-ready sports car.",
-      image: "/slide1.jpg",
+      description: "Live Odds, Real-Time Payouts.",
+      image: "/g4.jpg",
     },
     {
-      name: "Mercedes AMG GT",
+      name: "VIP",
       price: "170",
-      description: "Performance and luxury combined.",
-      image: "/slide6.jpeg",
+      description: "Start Winning Now!.",
+      image: "/g1.jpg",
     },
   ];
 
@@ -99,7 +99,7 @@ const CarCard: React.FC<CarCardProps> = ({
     <div className="flex items-baseline mb-6">
       <span className="text-4xl font-light">$</span>
       <span className="text-5xl font-light">{price}</span>
-      <span className="text-gray-600 ml-2">/ Per hour</span>
+      <span className="text-gray-600 ml-2">/ Per bet</span>
     </div>
     <button className="border border-red-600 rounded-2xl font-normal text-black py-3 px-6 w-full hover:bg-red-600 hover:text-black transition-colors">
       + MORE DETAILS
