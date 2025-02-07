@@ -20,7 +20,7 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className=" p-4 rounded-3xl backdrop-blur-3xl bg-opacity-30 text-space-cadet bg-slate-100 fixed top-4 right-5 left-5 md:whitespace-nowrap md:right-8 md:left-8 lg:right-40 lg:left-40  z-50">
+    <nav className=" p-4 rounded-3xl text-space-cadet bg-white fixed top-4 right-5 left-5 md:whitespace-nowrap md:right-8 md:left-8 lg:right-40 lg:left-40  z-50">
       <div className="text-sm container flex justify-between items-center font-medium mx-auto ">
         <div className="flex justify-between items-center w-full">
           {/* Logo */}
