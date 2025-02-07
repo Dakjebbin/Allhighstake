@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import Image from "next/image";
+// import Image from "next/image";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
 
@@ -26,9 +26,11 @@ const Navbar = () => {
           {/* Logo */}
           <Link
             href="/"
-            className="text-2xl font-semibold flex items-center text-space-cadet "
+            className="text-xl font-semibold flex items-center text-space-cadet "
           >
-            <Image src="/LOGO-0.png" alt="Logo" width={150} height={20} />
+            {" "}
+            Allhighstake
+            {/* <Image src="/LOGO-0.png" alt="Logo" width={150} height={20} /> */}
           </Link>
 
           {/* Desktop Navigation Items */}

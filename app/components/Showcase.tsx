@@ -10,37 +10,37 @@ const CarSlider = () => {
   const cars = [
     {
       name: "VIP",
-      price: "120",
+      price: "200",
       description: " Place Your Bets & Cash Out Big.",
       image: "/slide2.jpg",
     },
     {
       name: "VIP",
-      price: "180",
+      price: "150",
       description: "High-Stakes Predictions, Huge Rewards!.",
       image: "/slide3.jpg",
     },
     {
       name: "VIP",
-      price: "180",
+      price: "120",
       description: " Bet on Your Favorite Players.",
       image: "/g3.jpg",
     },
     {
       name: "VIP",
-      price: "160",
+      price: "80",
       description: " Win Up to $1,000 Instantly!.",
       image: "/g2.jpg",
     },
     {
       name: "VIP",
-      price: "200",
+      price: "500",
       description: "Live Odds, Real-Time Payouts.",
       image: "/g4.jpg",
     },
     {
       name: "VIP",
-      price: "170",
+      price: "300",
       description: "Start Winning Now!.",
       image: "/g1.jpg",
     },

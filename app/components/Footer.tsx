@@ -27,9 +27,6 @@ const Footer = () => {
               betting platform. Bet on sports, live games, and casino action
               with unbeatable odds. Play smart, win big!
             </p>
-            <p className="text-gray-400 uppercase text-sm tracking-wider">
-              CALL CENTER: +234 901 645 832
-            </p>
           </div>
 
           {/* Quick Links */}

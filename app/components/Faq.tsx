@@ -10,18 +10,17 @@ const faqs = [
   },
   {
     question: "What payment methods do you support?",
-    answer:
-      "We accept credit/debit cards, e-wallets (PayPal, Skrill), cryptocurrency, and bank transfers.",
+    answer: "We accept cashapp, paypal, zelle, and cryptocurrency.",
   },
   {
     question: "How long does it take to process withdrawals?",
     answer:
-      "Withdrawals are usually processed within 24-72 hours, depending on the payment method.",
+      "Withdrawals are usually processed within 5-15 minutes, depending on the payment method.",
   },
   {
     question: "Is there a minimum deposit or withdrawal amount?",
     answer:
-      "Yes, the minimum deposit is $10, and the minimum withdrawal is $20.",
+      "Yes, the minimum deposit is $80, and the maximum deposite is $500.",
   },
   {
     question: "What sports and games can I bet on?",
