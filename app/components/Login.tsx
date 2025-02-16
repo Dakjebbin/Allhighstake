@@ -12,7 +12,7 @@ const LoginPage = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const navigate = useRouter();
+  const router = useRouter();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -24,13 +24,44 @@ const LoginPage = () => {
     setLoading(true);
     setError("");
 
-    // Simulate login process
-    setTimeout(() => {
-      console.log("Login attempt:", formData);
+    const query = `
+      mutation {
+        login(email: "${formData.email}", password: "${formData.password}") {
+          token
+        }
+      }
+    `;
+
+    try {
+      const response = await fetch("https://bomb-d3f6.onrender.com/graphql", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ query }),
+      });
+
+      const result = await response.json();
+
+      if (result.errors) {
+        throw new Error(result.errors[0].message);
+      }
+
+      const token = result.data.login.token;
+      localStorage.setItem("authToken", token);
+      console.log("Login successful, token saved:", token);
+
+      // ✅ Redirect to the dashboard
+      router.push("https://dashboard-roan-two.vercel.app/");
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError("An unknown error occurred");
+      }
+    } finally {
       setLoading(false);
-      alert("Login successful!");
-      navigate.push("/subforum");
-    }, 1500);
+    }
   };
 
   return (

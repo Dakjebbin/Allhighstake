@@ -7,19 +7,48 @@ const Index = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState("");
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  interface RequestPasswordResetResponse {
+    data: {
+      requestPasswordReset: {
+        message: string;
+      };
+    };
+  }
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
     setMessage("");
 
-    // Simulate API call
-    // setTimeout(() => {
-    //   setMessage(
-    //     "Reset link sent! Please check your email. If you don't see it, please check your spam folder."
-    //   );
-    //   setIsLoading(false);
-    //   setEmail("");
-    // }, 1500);
+    try {
+      const response = await fetch("https://bomb-d3f6.onrender.com/graphql", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          query: `
+            mutation {
+              requestPasswordReset(email: "${email}") {
+                message
+              }
+            }
+          `,
+        }),
+      });
+
+      const result: RequestPasswordResetResponse = await response.json();
+      if (result.data?.requestPasswordReset?.message) {
+        setMessage(result.data.requestPasswordReset.message);
+      } else {
+        setMessage("Something went wrong. Please try again.");
+      }
+    } catch {
+      setMessage("Error: Unable to send reset request.");
+    }
+
+    setIsLoading(false);
+    setEmail("");
   };
 
   return (

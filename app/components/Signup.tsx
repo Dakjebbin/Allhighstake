@@ -5,7 +5,9 @@ import { useRouter } from "next/navigation";
 
 const SignupPage = () => {
   const [formData, setFormData] = useState({
-    name: "",
+    firstName: "",
+    lastName: "",
+    userName: "",
     email: "",
     password: "",
   });
@@ -13,7 +15,7 @@ const SignupPage = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
-  const navigate = useRouter();
+  const router = useRouter();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -26,17 +28,54 @@ const SignupPage = () => {
     setError("");
     setSuccess(false);
 
-    // Simulate form submission
-    setTimeout(() => {
-      console.log("Signup successful:", formData);
+    const query = `
+      mutation {
+        register(
+          firstName: "${formData.firstName}"
+          lastName: "${formData.lastName}"
+          userName: "${formData.userName}"
+          email: "${formData.email}"
+          password: "${formData.password}"
+        ) {
+          id
+          firstName
+          lastName
+          userName
+          email
+        }
+      }
+    `;
+
+    try {
+      const response = await fetch("https://bomb-d3f6.onrender.com/graphql", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ query }),
+      });
+
+      const result = await response.json();
+
+      if (result.errors) {
+        throw new Error(result.errors[0].message);
+      }
+
+      console.log("successful:", result.data.register);
       setSuccess(true);
 
       setTimeout(() => {
-        navigate.push("/signin");
-      }, 2000);
-
+        router.push("/login");
+      }, 1000);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError("An unknown error occurred");
+      }
+    } finally {
       setLoading(false);
-    }, 1500);
+    }
   };
 
   return (
@@ -48,26 +87,64 @@ const SignupPage = () => {
         {error && <div className="text-red-600 text-center mb-4">{error}</div>}
         {success && (
           <div className="text-green-600 text-center mb-4">
-            Signup successful! Redirecting to home...
+            Signup successful!
           </div>
         )}
         <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Name Input */}
+          {/* First Name Input */}
           <div>
             <label
-              htmlFor="name"
+              htmlFor="firstName"
               className="block text-gray-700 font-medium mb-2"
             >
-              Name
+              First Name
             </label>
             <input
               type="text"
-              id="name"
-              name="name"
-              placeholder="Enter your name"
+              id="firstName"
+              name="firstName"
+              placeholder="Enter your first name"
               required
               className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-gray-300"
-              value={formData.name}
+              value={formData.firstName}
+              onChange={handleChange}
+            />
+          </div>
+          {/* Last Name Input */}
+          <div>
+            <label
+              htmlFor="lastName"
+              className="block text-gray-700 font-medium mb-2"
+            >
+              Last Name
+            </label>
+            <input
+              type="text"
+              id="lastName"
+              name="lastName"
+              placeholder="Enter your last name"
+              required
+              className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-gray-300"
+              value={formData.lastName}
+              onChange={handleChange}
+            />
+          </div>
+          {/* Username Input */}
+          <div>
+            <label
+              htmlFor="userName"
+              className="block text-gray-700 font-medium mb-2"
+            >
+              Username
+            </label>
+            <input
+              type="text"
+              id="userName"
+              name="userName"
+              placeholder="Enter your username"
+              required
+              className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-gray-300"
+              value={formData.userName}
               onChange={handleChange}
             />
           </div>
@@ -119,12 +196,6 @@ const SignupPage = () => {
           >
             {loading ? "Signing up..." : "Sign up"}
           </button>
-          <div className="flex items-center justify-center space-x-1">
-            <div className="text-base">Already have an account?</div>
-            <a href="/login">
-              <div className="hover:underline">Login</div>
-            </a>
-          </div>
         </form>
       </div>
     </div>
