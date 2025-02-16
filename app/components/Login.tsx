@@ -28,6 +28,10 @@ const LoginPage = () => {
       mutation {
         login(email: "${formData.email}", password: "${formData.password}") {
           token
+          user {
+            id
+            email
+          }
         }
       }
     `;
@@ -47,9 +51,11 @@ const LoginPage = () => {
         throw new Error(result.errors[0].message);
       }
 
-      const token = result.data.login.token;
+      const { token, user } = result.data.login;
       localStorage.setItem("authToken", token);
-      console.log("Login successful, token saved:", token);
+      localStorage.setItem("userId", user.id);
+      localStorage.setItem("userEmail", user.email);
+      console.log("Login successful, user data saved:", { token, user });
 
       // ✅ Redirect to the dashboard
       router.push("https://dashboard-roan-two.vercel.app/");

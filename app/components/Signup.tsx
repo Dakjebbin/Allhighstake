@@ -64,6 +64,11 @@ const SignupPage = () => {
       console.log("successful:", result.data.register);
       setSuccess(true);
 
+      // ✅ Save user details in localStorage
+      localStorage.setItem("userId", result.data.register.id);
+      localStorage.setItem("userName", result.data.register.userName);
+      localStorage.setItem("email", result.data.register.email);
+
       setTimeout(() => {
         router.push("/login");
       }, 1000);
