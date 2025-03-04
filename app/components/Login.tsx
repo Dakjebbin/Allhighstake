@@ -46,16 +46,12 @@ const LoginPage = () => {
       });
 
       const result = await response.json();
+      localStorage.setItem("token", result.data.login.token);
+      console.log(result.data.login.token);
 
       if (result.errors) {
         throw new Error(result.errors[0].message);
       }
-
-      const { token, user } = result.data.login;
-      localStorage.setItem("authToken", token);
-      localStorage.setItem("userId", user.id);
-      localStorage.setItem("userEmail", user.email);
-      console.log("Login successful, user data saved:", { token, user });
 
       // ✅ Redirect to the dashboard
       router.push("https://dashboard-roan-two.vercel.app/");
