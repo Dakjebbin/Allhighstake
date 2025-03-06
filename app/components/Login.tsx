@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-// import { useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 const LoginPage = () => {
   const [formData, setFormData] = useState({
@@ -10,7 +10,7 @@ const LoginPage = () => {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  // const router = useRouter();
+  const router = useRouter();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -56,10 +56,7 @@ const LoginPage = () => {
       }
 
       const token = result.data.login.token;
-      if(typeof window !=="undefined"){
-        localStorage.setItem("token", token as string);
-        console.log("this is local storage", localStorage, Object.keys(localStorage), localStorage.getItem("token"))
-      }
+      localStorage.setItem("token", token);
       console.log("Token saved:", token); // Debug log
 
       // Redirect to dashboard (use window.location for external URL)
