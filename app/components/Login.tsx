@@ -56,6 +56,7 @@ const LoginPage = () => {
       const token = result.data.login.token;
       if (typeof window !== "undefined") {
         localStorage.setItem("token", token as string);
+        localStorage.setItem("userId", result.data.login.user.id);
         console.log(
           "this is local storage",
           localStorage,
