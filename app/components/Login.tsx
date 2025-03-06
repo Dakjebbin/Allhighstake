@@ -8,18 +8,16 @@ const LoginPage = () => {
     email: "",
     password: "",
   });
-
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-
   const router = useRouter();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError("");
@@ -46,21 +44,29 @@ const LoginPage = () => {
       });
 
       const result = await response.json();
-      localStorage.setItem("token", result.data.login.token);
-      console.log(result.data.login.token);
 
+      // Check for GraphQL errors first
       if (result.errors) {
         throw new Error(result.errors[0].message);
       }
 
-      // ✅ Redirect to the dashboard
-      router.push("https://dashboard-roan-two.vercel.app/");
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        setError(error.message);
-      } else {
-        setError("An unknown error occurred");
+      // Ensure data exists before accessing token
+      if (!result.data || !result.data.login || !result.data.login.token) {
+        throw new Error("Invalid response from server: No token received");
       }
+
+      const token = result.data.login.token;
+      if(typeof window !=="undefined"){
+        localStorage.setItem("token", token as string);
+        console.log("this is local storage", localStorage, Object.keys(localStorage), localStorage.getItem("token"))
+      }
+      console.log("Token saved:", token); // Debug log
+
+      // Redirect to dashboard (use window.location for external URL)
+      window.location.href = "https://dashboard-roan-two.vercel.app/";
+    } catch (error) {
+      console.error("Login error:", error);
+      setError(error.message || "An unknown error occurred");
     } finally {
       setLoading(false);
     }
@@ -74,7 +80,6 @@ const LoginPage = () => {
         </h1>
         {error && <div className="text-red-600 text-center mb-4">{error}</div>}
         <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Email Input */}
           <div>
             <label
               htmlFor="email"
@@ -93,7 +98,6 @@ const LoginPage = () => {
               onChange={handleChange}
             />
           </div>
-          {/* Password Input */}
           <div>
             <label
               htmlFor="password"
@@ -117,8 +121,6 @@ const LoginPage = () => {
               Forgotten Password?
             </div>
           </a>
-
-          {/* Submit Button */}
           <button
             type="submit"
             className={`w-full border border-red-600 text-black hover:text-white py-3 rounded-lg font-semibold hover:bg-red-600 transition duration-200 ${
@@ -128,7 +130,6 @@ const LoginPage = () => {
           >
             {loading ? "Logging in..." : "Login"}
           </button>
-
           <div className="flex items-center justify-center space-x-1">
             <div className="text-base">Dont have an account?</div>
             <a href="/signup">
