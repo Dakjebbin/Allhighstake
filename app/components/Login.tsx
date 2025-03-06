@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-// import { useRouter } from "next/navigation";
 
 const LoginPage = () => {
   const [formData, setFormData] = useState({
@@ -10,14 +9,13 @@ const LoginPage = () => {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  // const router = useRouter();
 
-  const handleChange = (e:any) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = async (e:any) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLElement>) => {
     e.preventDefault();
     setLoading(true);
     setError("");
@@ -56,9 +54,14 @@ const LoginPage = () => {
       }
 
       const token = result.data.login.token;
-      if(typeof window !=="undefined"){
+      if (typeof window !== "undefined") {
         localStorage.setItem("token", token as string);
-        console.log("this is local storage", localStorage, Object.keys(localStorage), localStorage.getItem("token"))
+        console.log(
+          "this is local storage",
+          localStorage,
+          Object.keys(localStorage),
+          localStorage.getItem("token")
+        );
       }
       console.log("Token saved:", token); // Debug log
 
@@ -66,7 +69,9 @@ const LoginPage = () => {
       window.location.href = "https://dashboard-roan-two.vercel.app/";
     } catch (error) {
       console.error("Login error:", error);
-      setError(error.message || "An unknown error occurred");
+      setError(
+        (error as { message: string }).message || "An unknown error occurred"
+      );
     } finally {
       setLoading(false);
     }
