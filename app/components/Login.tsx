@@ -1,8 +1,11 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+const DASHBOARD_URL=process.env.NEXT_PUBLIC_DASHBOARD_URL;
 
 const LoginPage = () => {
+  const router = useRouter()
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -54,6 +57,7 @@ const LoginPage = () => {
       }
 
       const token = result.data.login.token;
+      const userId = result.data.login.user.id;
       if (typeof window !== "undefined") {
         localStorage.setItem("token", token as string);
         localStorage.setItem("userId", result.data.login.user.id);
@@ -67,7 +71,7 @@ const LoginPage = () => {
       console.log("Token saved:", token); // Debug log
 
       // Redirect to dashboard (use window.location for external URL)
-      window.location.href = "https://dashboard-roan-two.vercel.app/";
+      router.push(`${DASHBOARD_URL}?token=${token}&userId=${userId}`)
     } catch (error) {
       console.error("Login error:", error);
       setError(
