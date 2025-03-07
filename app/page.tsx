@@ -6,10 +6,15 @@ import Showcase from "./components/Showcase";
 import Best from "./components/Best";
 import FAQ from "./components/Faq";
 import Footer from "./components/Footer";
+import SmartsuppChat from "./Smartsupp";
+
 
 export default function Home() {
+
+  
   return (
     <div>
+      <SmartsuppChat/>
       <Navbar />
       <Hero />
       <Card />
@@ -18,6 +23,7 @@ export default function Home() {
       <Best />
       <FAQ />
       <Footer />
+
     </div>
   );
 }
