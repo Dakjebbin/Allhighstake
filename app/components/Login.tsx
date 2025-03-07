@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+const DASHBOARD_URL=process.env.NEXT_PUBLIC_DASHBOARD_URL;
 
 const LoginPage = () => {
   const router = useRouter()
@@ -70,7 +71,7 @@ const LoginPage = () => {
       console.log("Token saved:", token); // Debug log
 
       // Redirect to dashboard (use window.location for external URL)
-      router.push(`https://dashboard-roan-two.vercel.app?token=${token}&userId=${userId}`)
+      router.push(`${DASHBOARD_URL}?token=${token}&userId=${userId}`)
     } catch (error) {
       console.error("Login error:", error);
       setError(
